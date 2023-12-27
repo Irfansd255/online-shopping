@@ -250,3 +250,135 @@
   border: none;
   width: 100%;
 }
+
+.cx-singleProduct {
+  .wrapper {
+    display: flex;
+    .left {
+      margin-right: 20px;
+      .p-img {
+        background-color: azure;
+        padding: 20px;
+        img {
+          height: 400px;
+        }
+      }
+    }
+    .right {
+      h6 {
+        font-weight: 600;
+        span {
+          color: gray;
+          font-weight: 500;
+          margin-left: 10px;
+        }
+      }
+      .card-btn {
+        height: 40px;
+        background-color: purple;
+        border: none;
+        padding: 0 30px;
+        color: #fff;
+      }
+      h4 {
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+      h5 {
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+      p {
+        color: grey;
+      }
+      .c-counter-btn {
+        margin-right: 15px;
+        height: 40px;
+        border: 1px solid gray;
+        display: flex;
+        align-items: center;
+        .minus {
+          cursor: pointer;
+          padding-right: 10px;
+          margin-right: 10px;
+          border-right: 1px solid gray;
+          padding-left: 10px;
+        }
+        .plus {
+          cursor: pointer;
+
+          padding-left: 10px;
+          margin-left: 10px;
+          border-left: 1px solid gray;
+          padding-right: 10px;
+        }
+        .qty {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.cx-cart {
+  .cart-item-wrapper {
+    max-height:50vh ;
+    overflow-y: auto;
+    margin-top: 20px;
+    .item-wrapper {
+      margin-bottom: 10px;
+      padding: 15px;
+      background-color: antiquewhite;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .p-img{
+        width: 10%;
+        img{
+          height: 70px;
+        }
+      }
+      .p-name{
+        width: 20%;
+        p{
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          font-weight: 600;
+        }
+      }
+      .p-counter{
+        .qty{
+          display: inline-flex;
+          align-items: center;
+          height: 40px;
+          padding: 0 10px;
+          border: 1px solid gray;
+          margin: 0 10px;
+        }
+        .minus{
+          cursor: pointer;
+
+        }
+        .plus{
+          cursor: pointer;
+        }
+      }
+      .p-price{
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.item-total{
+  margin-top: 20px;
+  h4{
+    font-weight: 600;
+
+    color: gray;
+    span{
+      color: #000;
+    }
+  }
+}

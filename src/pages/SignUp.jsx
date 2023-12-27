@@ -65,7 +65,7 @@ const SignUp = () => {
                 </button>
                 <div className="text-center mt-2">or</div>
                 <div className="text-center mt-2">
-                  Click here for <Link to="/login">Login</Link>
+                  Click here for <Link to="/">Login</Link>
                 </div>
               </form>
             </div>
