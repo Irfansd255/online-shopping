@@ -3,9 +3,51 @@ import logo from "../assets/images/logo.png";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Spinner from "react-bootstrap/Spinner";
 
 const Login = () => {
   const [isPassShow, setIsPassShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    identifier: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  console.log(user);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = "http://localhost:1337/api/auth/local";
+
+    try {
+      setIsLoading(true);
+      if (user.identifier && user.password) {
+        const res = await axios.post(url, user);
+        console.log("logon res = >", res);
+
+        if (res.data) {
+          setIsLoading(false);
+          toast.success("Login Successfully");
+          localStorage.setItem("token", res.data.jwt);
+        }
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("wrong credentials");
+    }
+  };
 
   return (
     <div className="cx-auth-main">
@@ -27,14 +69,17 @@ const Login = () => {
             <div className="inner">
               <h3>Login</h3>
               <hr />
-
-              <form className="mt-5">
+              <ToastContainer />
+              <form className="mt-5" onSubmit={handleSubmit}>
                 <input
                   type="email"
                   placeholder="Enter email"
                   className="form-control mb-4"
                   required
                   autoComplete="off"
+                  name="identifier"
+                  value={user.identifier}
+                  onChange={handleChange}
                 />
                 <div className="input-with-icon">
                   <input
@@ -44,6 +89,8 @@ const Login = () => {
                     required
                     autoComplete="off"
                     name="password"
+                    value={user.password}
+                    onChange={handleChange}
                   />
                   <button
                     type="button"
@@ -54,6 +101,16 @@ const Login = () => {
                 </div>
 
                 <button className=" auth-btn" type="submit">
+                  {isLoading && (
+                    <Spinner
+                      className="me-2"
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
                   Login
                 </button>
                 <div className="text-center mt-2">or</div>

@@ -22,14 +22,16 @@ const Categories = () => {
               <img src={img} alt="" className="cat-img" />
             </div>
           </div>
-        </div><div className="col-md-3">
+        </div>
+        <div className="col-md-3">
           <div className="cat-card">
             <h5>Mobile</h5>
             <div className="inner-card">
               <img src={img} alt="" className="cat-img" />
             </div>
           </div>
-        </div><div className="col-md-3">
+        </div>
+        <div className="col-md-3">
           <div className="cat-card">
             <h5>Mobile</h5>
             <div className="inner-card">

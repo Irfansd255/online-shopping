@@ -6,9 +6,10 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../assets/images/logo.png";
 import { FaRegHeart, FaSearch, FaShoppingCart } from "react-icons/fa";
 import img from "../assets/images/watch-prod-3.webp";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
   const [show, setShow] = useState(false);
-
+const navigate = useNavigate()
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
@@ -37,7 +38,14 @@ const Header = () => {
               <button className="icon-btn">
                 <FaShoppingCart />
               </button>
-              <button className="btn btn-danger">Logout</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {localStorage.removeItem("token")
+                navigate('/')
+              }}
+              >
+                Logout
+              </button>
             </div>
           </Navbar.Collapse>
         </Container>
@@ -86,7 +94,8 @@ const Header = () => {
                   similique accusamus laboriosam adipisci! Delectus, ipsa.
                 </p>
               </div>
-            </div><div className="search-item mb-3">
+            </div>
+            <div className="search-item mb-3">
               <div className="s-left">
                 <img src={img} alt="img" />
               </div>
@@ -102,7 +111,8 @@ const Header = () => {
                   similique accusamus laboriosam adipisci! Delectus, ipsa.
                 </p>
               </div>
-            </div><div className="search-item mb-3">
+            </div>
+            <div className="search-item mb-3">
               <div className="s-left">
                 <img src={img} alt="img" />
               </div>

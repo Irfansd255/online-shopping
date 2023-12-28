@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -7,15 +7,24 @@ import Footer from "./components/Footer";
 import SingleProduct from "./pages/SingleProduct";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
+import { useEffect } from "react";
 
 function App() {
 
   const location = useLocation();
   const cuurRoute = location.pathname;
+const navigate = useNavigate()
+  useEffect(()=>{
+    if(!localStorage.getItem('token')){
+      navigate('/')
+    }
+  },[])
+
+
   return (
     <div className="App">
       {
-        cuurRoute === "/" || cuurRoute === '/signup' ? <></> : <Header/>
+        cuurRoute === "/" || cuurRoute === '/signup' ? (<></>) : (<Header/>)
       }
       
       
@@ -28,7 +37,7 @@ function App() {
         <Route path='cart' element={<Cart/>}/>
       </Routes>
 {
-        cuurRoute === "/" || cuurRoute === '/signup' ? <></> : <Footer/>
+        cuurRoute === "/" || cuurRoute === '/signup' ? (<></>) : (<Footer/>)
 
 }
       
