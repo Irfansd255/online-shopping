@@ -1,40 +1,44 @@
-import React from 'react'
-import Carousel from 'react-bootstrap/Carousel';
-import img from '../assets/images/banner.jpg'
+import React, { useEffect, useState } from "react";
+import Carousel from "react-bootstrap/Carousel";
+import img from "../assets/images/banner.jpg";
+import { API_BASE_URL, fetchDtataFromApi } from "../api/api";
 
 const Banner = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    fetchDtataFromApi("/api/banners?populate=*").then((res) => {
+      console.log(res);
+      setData(res.data);
+    });
+  };
+
   return (
     <div>
       <Carousel>
-      <Carousel.Item>
-        {/* <ExampleCarouselImage text="First slide" /> */}
-        <img src={img} alt="" className='banner-img' />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-      <img src={img} alt="" className='banner-img' />
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-      <img src={img} alt="" className='banner-img' />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+        {data?.map((items) => (
+          <Carousel.Item key={items.id}>
+            <img
+              src={
+                API_BASE_URL +
+                items?.attributes?.image?.data[0]?.attributes?.url
+              }
+              alt=""
+              className="banner-img"
+            />
+            <Carousel.Caption>
+              <h3>{items.attributes.title}</h3>
+              <p>{items.attributes.desc}</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;
