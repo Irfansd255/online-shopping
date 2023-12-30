@@ -9,28 +9,37 @@ import {
   FaTwitter,
   FaWhatsapp
 } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
+import { API_BASE_URL } from "../api/api";
+import RelatedProducts from "./../components/RelatedProducts";
 
 const SingleProduct = () => {
+  const { id } = useParams();
+
+  const { data } = useFetch(`/api/products?populate=*&[filters][id]=${id}`);
+
   return (
     <div className="cx-singleProduct container my-5">
-      <div className="wrapper">
+      <div className="wrapper mb-4">
         <div className="left">
           <div className="p-img">
-            <img src={img} alt="" />
+            <img
+              src={
+                API_BASE_URL +
+                data?.data[0]?.attributes?.image?.data[0]?.attributes?.url
+              }
+              alt=""
+            />
           </div>
         </div>
 
         <div className="right">
-          <h4>poco m6 5g mobile</h4>
-          <h5>Price: &#8377; 36000</h5>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Consectetur velit voluptas quas, pariatur sequi non nisi vitae
-            placeat itaque sapiente nesciunt sit, ipsam autem inventore officia.
-            Dolor quod incidunt blanditiis.
-          </p>
+          <h4>{data?.data[0]?.attributes?.title}</h4>
+          <h5>Price: &#8377; {data?.data[0]?.attributes?.price}</h5>
+          <p>{data?.data[0]?.attributes?.desc}</p>
 
-          <div className="d-flex mb-4" >
+          <div className="d-flex mb-4">
             <div className="c-counter-btn">
               <span className="minus">
                 <FaMinus />
@@ -49,7 +58,13 @@ const SingleProduct = () => {
 
           <div className="">
             <h6>
-              Category: <span>Mobile</span>
+              Category:{" "}
+              <span>
+                {
+                  data?.data[0]?.attributes?.categories?.data[0]?.attributes
+                    ?.title
+                }
+              </span>
             </h6>
             <h6>
               Share:
@@ -69,6 +84,11 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+
+      <RelatedProducts
+        productId={data?.data[0]?.id}
+        categoryId={data?.data[0]?.attributes?.categories?.data[0]?.id}
+      />
     </div>
   );
 };

@@ -1,11 +1,14 @@
 import React from "react";
 import img from "../assets/images/watch-prod-3.webp";
 import { API_BASE_URL } from "../api/api";
+import { useNavigate } from "react-router-dom";
 const Product = ({ data, id }) => {
   console.log('pppppp',data)
+
+  const navigate = useNavigate()
   return (
     <div className="col-md-3">
-      <div className="pro-card p-3">
+      <div className="pro-card p-3" onClick={()=>navigate(`/SingleProduct/${id}`)}>
         <div className="img">
           <img
             src={

@@ -35,7 +35,7 @@ const Home = () => {
     <div className="cx-home">
       <Banner />
       <Categories categories={categories} />
-      <Products products={products} />
+      <Products products={products} headingText='All Products' />
     </div>
   );
 };
