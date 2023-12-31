@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import img from "../assets/images/watch-prod-3.webp";
 import {
   FaCartPlus,
@@ -13,11 +13,26 @@ import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { API_BASE_URL } from "../api/api";
 import RelatedProducts from "./../components/RelatedProducts";
+import { Context } from "../context/Context";
 
 const SingleProduct = () => {
   const { id } = useParams();
 
   const { data } = useFetch(`/api/products?populate=*&[filters][id]=${id}`);
+
+  const { handleAddToCart } = useContext(Context);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increment = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   return (
     <div className="cx-singleProduct container my-5">
@@ -41,16 +56,22 @@ const SingleProduct = () => {
 
           <div className="d-flex mb-4">
             <div className="c-counter-btn">
-              <span className="minus">
+              <span className="minus" onClick={decrement}>
                 <FaMinus />
               </span>
-              <span className="qty">6</span>
-              <span className="plus">
+              <span className="qty">{quantity}</span>
+              <span className="plus" onClick={increment}>
                 <FaPlus />
               </span>
             </div>
             <div className="">
-              <button className="card-btn">
+              <button
+                className="card-btn"
+                onClick={() => {
+                  handleAddToCart(data?.data[0], quantity);
+                  setQuantity(1);
+                }}
+              >
                 <FaCartPlus /> ADD TO CART
               </button>
             </div>
